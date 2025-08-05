@@ -113,13 +113,16 @@ const istTimeString = istNow.toLocaleTimeString('en-IN', { hour12: true });
 const istDateString = istNow.toLocaleDateString('en-IN');
 
 // Construct time string
-const timeInfo = `🕒 IST Time: ${istDateString} ${istTimeString}\n`;
+const timeInfo = 
+  '\n' +
+  `🕓 IST Time:\n${istDateString} ${istTimeString}`;
 
 const message = 
+  "-----------------------\n" + 
   formatContests(todayContests, '📅 Today\'s Contests') + '\n' +
   formatContests(tomorrowContests, '📅 Tomorrow\'s Contests') + '\n' +
-  formatContests(dayAfterContests, '📅 Day After Tomorrow\'s Contests')+
-  timeInfo ;
+  formatContests(dayAfterContests, '📅 Day After Tomorrow\'s Contests') +
+  timeInfo;
 
 await axios.post(webhookUrl, {
   content: message,
