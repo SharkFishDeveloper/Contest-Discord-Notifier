@@ -107,24 +107,29 @@ const formatContests = (contests: any[], dayLabel: string) => {
            `🌐 Platform: \`${contest.resource}\`\n`;
   }).join('\n');
 };
+const now = new Date();
+const istNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+const istTimeString = istNow.toLocaleTimeString('en-IN', { hour12: true });
+const istDateString = istNow.toLocaleDateString('en-IN');
+
+// Construct time string
+const timeInfo = `🕒 IST Time: ${istDateString} ${istTimeString}\n`;
 
 const message = 
   formatContests(todayContests, '📅 Today\'s Contests') + '\n' +
   formatContests(tomorrowContests, '📅 Tomorrow\'s Contests') + '\n' +
-  formatContests(dayAfterContests, '📅 Day After Tomorrow\'s Contests');
+  formatContests(dayAfterContests, '📅 Day After Tomorrow\'s Contests')+
+  timeInfo ;
 
 await axios.post(webhookUrl, {
   content: message,
 });
-const now = new Date();
-const istNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-const istTimeString = istNow.toLocaleTimeString('en-IN', { hour12: true });
+
 return c.json({
   status: 'sent',
   today: todayContests.length,
   tomorrow: tomorrowContests.length,
   dayAfterTomorrow: dayAfterContests.length,
-  time: istTimeString
 });
 
 });
